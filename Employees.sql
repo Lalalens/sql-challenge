@@ -86,4 +86,24 @@ INNER JOIN departments ON dept_emp.dept_no = dept_emp.dept_no
 --Employees with the name Hercules and last anme begins with B
 SELECT first_name, last_name
 FROM EMPLOYEES 
-WHERE first_name = Hercules and last_name != B
+WHERE first_name = 'Hercules' and last_name LIKE 'B%'
+
+--Employees in Sales Department
+SELECT departments.dept_name, employees.emp_no, employees.last_name, employees.first_name
+FROM employees
+INNER JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+INNER JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE departments.dept_name = 'Sales'
+
+--Employees in the Sales and Development departments
+SELECT employees.emp_no, employees.last_name, employees.first_name, departments.dept_name
+FROM employees
+INNER JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+INNER JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE departments.dept_name = 'Sales' OR departments.dept_name = 'Development'
+
+--Frequency count of last names
+SELECT last_name, COUNT(last_name) AS "name freq"
+FROM employees
+GROUP BY last_name
+ORDER BY "name freq" DESC
